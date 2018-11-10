@@ -16,7 +16,7 @@ const objParse = obj => Object.keys(obj);
 
 
 const versionView = () => {
-    console.log(`v${pkg.name}`);
+    console.log(`v${pkg.version}`);
 }
 
 const helpView = () => {
