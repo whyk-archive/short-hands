@@ -26,8 +26,8 @@ const helpView = () => {
         Cmd
         - set: set up alias
         - run: Use the set up alias
-        - version || -v: show current version
-        - help || -h: show help
+        - version, -v: print current version
+        - help, -h: print help
 
         Opt
         if 'set': Name of alias to set (ex. ${objParse(pkg.bin)} set lsdeep 'npm ls --depth=0')
