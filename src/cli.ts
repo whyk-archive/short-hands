@@ -6,8 +6,9 @@ const fs = require('fs');
 
 const pkg = require('../package.json');
 const userhome = process.env[process.platform === 'win32' ? "USERPROFILE" : "HOME"];
-const config = path.join(userhome, '.npmaliasconfig');
-const alias = fs.readFileSync(config, 'utf8');
+const configfile = '.npmaliasconfig';
+const config = path.join(userhome, configfile);
+const alias = Object(fs.readFileSync(config, 'utf8'));
 const args = process.argv;
 const cmd = args[2];
 const opt = args[3];
@@ -39,14 +40,38 @@ const errView = err => {
   console.log(err);
 }
 
-const setCmd = alias => {}
+const setCmd = () => {
+    const cmdName = args[3];
+    const cmdDetail = args[4];
+
+    const existConfig = () => {
+        try {
+            fs.statSync(config)
+            return true;
+        } catch (err) {
+            if(err.code === 'ENOENT') return false;
+        }
+    }
+
+    if(!existConfig) {
+        fs.writeFileSync(config, '{commands: []}');
+        console.log(`${configfile}を新規作成`);
+    }
+
+    const cmdData = {name: cmdName, cmd: cmdDetail};
+    console.log(cmdData);
+    const addData = alias.push(cmdData);
+    console.log(typeof alias);
+    console.log(alias[0]);
+    console.log(Object(addData));
+}
 
 const runCmd = alias => {
     npmRun(alias);
 }
 
 
-if(cmd === 'set') setCmd(opt);
+if(cmd === 'set') setCmd();
 else if(cmd === 'run') runCmd(opt);
 else if(cmd === 'help' || cmd === '-h') helpView();
 else if(cmd === 'version' || cmd === '-v') versionView();
