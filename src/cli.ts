@@ -36,8 +36,8 @@ const helpView = () => {
     
 }
 
-const errView = err => {
-  console.log(err);
+const errView = () => {
+  console.log(`ERR! ${cmd} is not command`);
 }
 
 const setCmd = () => {
@@ -75,5 +75,5 @@ if(cmd === 'set') setCmd();
 else if(cmd === 'run') runCmd(opt);
 else if(cmd === 'help' || cmd === '-h') helpView();
 else if(cmd === 'version' || cmd === '-v') versionView();
-// else errView(err);
+else errView();
 
