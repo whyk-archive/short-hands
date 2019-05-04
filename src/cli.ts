@@ -8,7 +8,7 @@ const pkg = require('../package.json');
 const userhome = process.env[process.platform === 'win32' ? "USERPROFILE" : "HOME"];
 const configfile = '.npmaliasconfig';
 const config = path.join(userhome, configfile);
-const alias = Object(fs.readFileSync(config, 'utf8'));
+const alias = JSON.parse(fs.readFileSync(config, 'utf8'));
 const args = process.argv;
 const cmd = args[2];
 const opt = args[3];
@@ -60,10 +60,8 @@ const setCmd = () => {
 
     const cmdData = {name: cmdName, cmd: cmdDetail};
     console.log(cmdData);
-    const addData = alias.push(cmdData);
-    console.log(typeof alias);
-    console.log(alias[0]);
-    console.log(Object(addData));
+    // const addData = alias.push(cmdData);
+    // console.log(alias[0]);
 }
 
 const runCmd = alias => {
