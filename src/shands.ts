@@ -46,8 +46,8 @@ program
             console.error(`ERR! ${error}`);
             return;
           }
-          console.log(`stdout: ${stdout}`);
-          console.log(`stderr: ${stderr}`);
+          console.log(`\nstdout:\n${stdout}`);
+          console.log(`stderr:\n${stderr}`);
         })
         console.log(obj.cmd);
       }
