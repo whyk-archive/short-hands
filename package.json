@@ -2,9 +2,9 @@
   "name": "short-hands",
   "version": "1.0.0",
   "description": "command alias package.",
-  "main": "dist/cli.js",
+  "main": "dist/shands.js",
   "bin": {
-    "shands": "dist/cli.js"
+    "shands": "dist/shands.js"
   },
   "scripts": {
     "watch": "tsc -w",
