@@ -1,2 +1,2 @@
-# npm-alias
-npm create alias package. WIP.
+# short-hands
+command alias package. WIP.
