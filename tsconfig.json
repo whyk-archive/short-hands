@@ -5,8 +5,14 @@
     "module": "commonjs",
     "target": "es2017",
     "sourceMap": true,
-    "types" : ["node"]
+    "types" : ["node"],
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true
   },
+  "files": [
+    "./src/cli.ts"
+  ],
   "exclude": [
     "node_modules"
   ]

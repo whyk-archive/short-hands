@@ -1,30 +1,30 @@
 {
-  "name": "npm-alias",
+  "name": "short-hands",
   "version": "1.0.0",
-  "description": "npm create alias package.",
+  "description": "command alias package.",
   "main": "dist/cli.js",
   "bin": {
-    "npma": "dist/cli.js"
+    "shands": "dist/cli.js"
   },
   "scripts": {
-    "watch": "tsc src/cli.ts --outDir dist/ -w",
-    "build": "tsc src/cli.ts --outDir dist/"
+    "watch": "tsc -w",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/windchime-yk/npm-alias.git"
+    "url": "git+https://github.com/windchime-yk/short-hands.git"
   },
   "keywords": [
     "cli",
     "npm",
     "alias"
   ],
-  "author": "WindChimeYK",
+  "author": "WhyK",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/windchime-yk/npm-alias/issues"
+    "url": "https://github.com/windchime-yk/short-hands/issues"
   },
-  "homepage": "https://github.com/windchime-yk/npm-alias#readme",
+  "homepage": "https://github.com/windchime-yk/short-hands#readme",
   "devDependencies": {
     "ts-loader": "^5.2.2",
     "typescript": "^3.1.3",

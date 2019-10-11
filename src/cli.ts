@@ -1,77 +1,57 @@
 #!/user/bin/env node
 
-const npmRun = require('npm-run');
-const path = require('path');
-const fs = require('fs');
-
+import * as path from 'path';
+import * as fs from 'fs';
+import { exec } from 'child_process';
+import program from 'commander'
 const pkg = require('../package.json');
+
 const userhome = process.env[process.platform === 'win32' ? "USERPROFILE" : "HOME"];
-const configfile = '.npmaliasconfig';
+const configfile = '.shandsrc';
 const config = path.join(userhome, configfile);
-const alias = JSON.parse(fs.readFileSync(config, 'utf8'));
-const args = process.argv;
-const cmd = args[2];
-const opt = args[3];
-const objParse = obj => Object.keys(obj);
 
-
-const versionView = () => {
-    console.log(`v${pkg.version}`);
+if(!fs.existsSync(config)) {
+  fs.writeFileSync(config, '{"commands": []}');
+  console.log(`${configfile}を新規作成`);
 }
 
-const helpView = () => {
-    console.log(`
-        ${objParse(pkg.bin)} cmd opt
-        
-        Cmd
-        - set: set up alias
-        - run: Use the set up alias
-        - version, -v: print current version
-        - help, -h: print help
+const shands = JSON.parse(fs.readFileSync(config, 'utf8'));
 
-        Opt
-        if 'set': Name of alias to set (ex. ${objParse(pkg.bin)} set lsdeep 'npm ls --depth=0')
-        if 'run': Name of the alias you set (ex. ${objParse(pkg.bin)} run lsdeep)
-    `);
-    
+interface data {
+  name: string,
+  cmd: string,
 }
 
-const errView = () => {
-  console.log(`ERR! ${cmd} is not command`);
-}
+program.version(pkg.version, '-v --version');
 
-const setCmd = () => {
-    const cmdName = args[3];
-    const cmdDetail = args[4];
+program
+  .command('set <key> <value>')
+  .description('コマンドを設定します')
+  .action((key, value) => {
+    const data: data = {name: key, cmd: value};
+    shands.commands.push(data);
+    const addData = `{"commands": ${JSON.stringify(shands.commands)}}`;
+    console.log(addData);
+    fs.writeFileSync(config, addData);
+  });
 
-    const existConfig = () => {
-        try {
-            fs.statSync(config)
-            return true;
-        } catch (err) {
-            if(err.code === 'ENOENT') return false;
-        }
-    }
+program
+  .command('run <command>')
+  .description('コマンドを走らせる')
+  .action(command => {
+    shands.commands.forEach((obj: data) => {
+      if (obj.name === command) {
+        exec(obj.cmd, (error, stdout, stderr) => {
+          if (error) {
+            console.error(`ERR! ${error}`);
+            return;
+          }
+          console.log(`stdout: ${stdout}`);
+          console.log(`stderr: ${stderr}`);
+        })
+        console.log(obj.cmd);
+      }
+    });
+  })
 
-    if(!existConfig) {
-        fs.writeFileSync(config, '{commands: []}');
-        console.log(`${configfile}を新規作成`);
-    }
-
-    const cmdData = {name: cmdName, cmd: cmdDetail};
-    console.log(cmdData);
-    // const addData = alias.push(cmdData);
-    // console.log(alias[0]);
-}
-
-const runCmd = alias => {
-    npmRun(alias);
-}
-
-
-if(cmd === 'set') setCmd();
-else if(cmd === 'run') runCmd(opt);
-else if(cmd === 'help' || cmd === '-h') helpView();
-else if(cmd === 'version' || cmd === '-v') versionView();
-else errView();
-
+program.parse(process.argv);
