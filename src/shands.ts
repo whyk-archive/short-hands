@@ -41,7 +41,7 @@ program
   .action(command => {
     shands.commands.forEach((obj: data) => {
       if (obj.name === command) {
-        exec(obj.cmd, (error, stdout, stderr) => {
+        exec(obj.cmd, { encoding: process.platform === 'win32' ? 'Shift_JIS' : 'utf8' }, (error, stdout, stderr) => {
           if (error) {
             console.error(`ERR! ${error}`);
             return;
