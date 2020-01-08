@@ -17,7 +17,7 @@ if(!fs.existsSync(config)) {
 
 const shands = JSON.parse(fs.readFileSync(config, 'utf8'));
 
-interface data {
+interface Data {
   name: string,
   cmd: string,
 }
@@ -28,7 +28,7 @@ program
   .command('set <key> <value>')
   .description('コマンドを設定します')
   .action((key, value) => {
-    const data: data = {name: key, cmd: value};
+    const data: Data = {name: key, cmd: value};
     shands.commands.push(data);
     const addData = `{"commands": ${JSON.stringify(shands.commands)}}`;
     console.log(addData);
@@ -39,7 +39,7 @@ program
   .command('run <command>')
   .description('コマンドを走らせる')
   .action(command => {
-    shands.commands.forEach((obj: data) => {
+    shands.commands.forEach((obj: Data) => {
       if (obj.name === command) {
         exec(obj.cmd, { encoding: process.platform === 'win32' ? 'Shift_JIS' : 'utf8' }, (error, stdout, stderr) => {
           if (error) {
