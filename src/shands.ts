@@ -4,7 +4,6 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { exec } from 'child_process';
 import program from 'commander'
-const pkg = require('../package.json');
 
 const userhome = process.env[process.platform === 'win32' ? "USERPROFILE" : "HOME"];
 const configfile = '.shandsrc';
@@ -22,7 +21,7 @@ interface Data {
   cmd: string,
 }
 
-program.version(pkg.version, '-v --version');
+program.version(process.env.npm_package_version, '-v --version');
 
 program
   .command('set <key> <value>')
