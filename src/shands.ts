@@ -15,7 +15,11 @@ if(!fs.existsSync(config)) {
   console.log(`${configfile}を新規作成`);
 }
 
-const shands = JSON.parse(fs.readFileSync(config, 'utf8'));
+interface Shands {
+  commands: object[]
+}
+
+const shands:Shands = JSON.parse(fs.readFileSync(config, 'utf8'));
 
 interface Data {
   name: string,
