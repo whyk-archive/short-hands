@@ -7,8 +7,8 @@
     "shands": "dist/shands.js"
   },
   "scripts": {
-    "dev": "parcel watch --target node src/shands.ts",
-    "build": "parcel build --target node src/shands.ts"
+    "dev": "parcel watch --target node src/shands.ts --no-cache --no-source-maps",
+    "build": "parcel build --target node src/shands.ts --no-cache"
   },
   "repository": {
     "type": "git",
