@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "declaration": true,
+    "module": "commonjs",
+    "target": "es2017",
+    "sourceMap": true,
+    "types" : ["node"],
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true
+  },
+  "files": [
+    "src/shands.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
